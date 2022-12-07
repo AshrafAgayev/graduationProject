@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.abbtechgraduationproject.data.entities.Foods
 import com.example.abbtechgraduationproject.data.entities.FoodsOnCart
+import com.example.abbtechgraduationproject.data.entities.FoodsResponse
 import com.example.abbtechgraduationproject.data.repo.FoodsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -15,12 +16,10 @@ import javax.inject.Inject
 class MainScreenViewModel @Inject constructor(var repo:FoodsRepository) : ViewModel(){
 
      var foodsList =MutableLiveData<List<Foods>>()
-    var foodsOnCart =MutableLiveData<List<FoodsOnCart>>()
 
 
     init {
         getAll()
-        getFromCart("Ashraf")
     }
 
     fun getAll(){
@@ -43,10 +42,6 @@ class MainScreenViewModel @Inject constructor(var repo:FoodsRepository) : ViewMo
     }
 
 
-    fun getFromCart(userName:String){
-            CoroutineScope(Dispatchers.Main).launch{
-                foodsOnCart.value = repo.getFromCart(userName)
-        }
-    }
+
 
 }

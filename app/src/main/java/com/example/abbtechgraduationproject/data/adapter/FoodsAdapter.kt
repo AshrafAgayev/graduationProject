@@ -1,11 +1,11 @@
-package com.example.abbtechgraduationproject.data
+package com.example.abbtechgraduationproject.data.adapter
 
 import android.content.Context
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.abbtechgraduationproject.data.IMAGE_URL
 import com.example.abbtechgraduationproject.data.entities.Foods
 import com.example.abbtechgraduationproject.databinding.SingleViewFoodBinding
 import com.example.abbtechgraduationproject.ui.viewmodels.MainScreenViewModel
@@ -36,7 +36,7 @@ class FoodsAdapter(var context: Context, var foodsList: List<Foods>, var viewMod
 
 
         try {
-            val url = "http://kasimadalan.pe.hu/foods/images/"+ food.image
+            val url = IMAGE_URL + food.image
 
             Glide.with(context).load(url).into(binding.foodImage)
 

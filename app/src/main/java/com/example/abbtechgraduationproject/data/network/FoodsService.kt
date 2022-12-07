@@ -26,7 +26,7 @@ interface FoodsService {
 
     @POST("foods/getFoodsCart.php")
     @FormUrlEncoded
-    suspend fun getFromCart(@Field("username") username: String): CartResponse
+    suspend fun getFromCart(@Field("userName") username: String): CartResponse
 
 
 
@@ -35,6 +35,9 @@ interface FoodsService {
     suspend fun getAllFoodsFromCart(): CartResponse
 
     //delete from cart http://kasimadalan.pe.hu/foods/deleteFood.php
+
+    @POST("foods/deleteFood.php")
+    suspend fun deleteFromCart(@Field("cartId") id:Int, @Field("userName") username:String)
 
 
 }

@@ -11,4 +11,6 @@ import java.io.Serializable
         var category:String,
         var orderAmount:Int,
         var userName:String
-    ): Serializable
+    ): Serializable {
+
+    }

@@ -5,4 +5,6 @@ import java.io.Serializable
 
 data class FoodsResponse(
    var foods: List<Foods>
-) :Serializable
+) :Serializable{
+
+}

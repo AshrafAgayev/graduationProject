@@ -1,6 +1,7 @@
 package com.example.abbtechgraduationproject.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -40,21 +41,18 @@ class MainScreenFragment : Fragment() {
 
             val adapter = FoodsAdapter(requireContext(), it, viewModel)
 
-            binding.foodsRecycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            binding.foodsRecycler.adapter = adapter
+            binding.rvMainCategory.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            binding.rvMainCategory.adapter = adapter
         }
 
 
-//        try{
-//            viewModel.foodsOnCart.observe(viewLifecycleOwner){
-//                println(it)
-//
-//                println()
-//            }
-//        }catch (exception:Exception){
-//
-//        }
 
+        viewModel.foodsOnCart.observe(viewLifecycleOwner) {
+            println(it)
+            Log.e("Foods on cart", "Couldnt call")
+
+        }
 
 
     }

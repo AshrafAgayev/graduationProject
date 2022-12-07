@@ -18,12 +18,17 @@ class FoodsRepository @Inject constructor(private var service: FoodsService) {
        return service.getAll().foods
     }
 
-    suspend fun getImage(imageName:String) : String{
-        return service.getImage(imageName)
-    }
 
     suspend fun getAllFoodsFromCart(): List<FoodsOnCart>{
         return service.getAllFoodsFromCart().foodsOnCart
+    }
+
+    suspend fun addToCart(name:String, image: String, price:Int, category:String, orderAmount:Int, username:String){
+        return service.addToCart(name, image, price, category, orderAmount, username)
+    }
+
+    suspend fun getFromCart(userName:String): List<FoodsOnCart>{
+        return service.getFromCart(userName).foodsOnCart
     }
 
 

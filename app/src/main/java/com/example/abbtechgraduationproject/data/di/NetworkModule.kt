@@ -6,6 +6,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -18,6 +19,9 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideFoodService(factory: GsonConverterFactory): FoodsService {
+
+
+
        return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(factory)
@@ -30,4 +34,7 @@ object NetworkModule {
     fun provideGsonConverterFactory(): GsonConverterFactory{
         return GsonConverterFactory.create()
     }
+
+
+
 }

@@ -20,7 +20,7 @@ class MainScreenViewModel @Inject constructor(var repo:FoodsRepository) : ViewMo
 
     init {
         getAll()
-        getAllFoodsFromCart()
+        getFromCart("Ashraf")
     }
 
     fun getAll(){
@@ -29,15 +29,23 @@ class MainScreenViewModel @Inject constructor(var repo:FoodsRepository) : ViewMo
         }
     }
 
-    fun getImage(imageName:String){
+
+//    fun getAllFoodsFromCart(){
+//        CoroutineScope(Dispatchers.Main).launch{
+//            repo.getAllFoodsFromCart()
+//        }
+//    }
+
+    fun addToCart(name:String, image: String, price:Int, category:String, orderAmount:Int, username:String){
         CoroutineScope(Dispatchers.Main).launch {
-            repo.getImage(imageName)
+            repo.addToCart(name, image, price, category, orderAmount, username)
         }
     }
 
-    fun getAllFoodsFromCart(){
-        CoroutineScope(Dispatchers.Main).launch{
-            repo.getAllFoodsFromCart()
+
+    fun getFromCart(userName:String){
+            CoroutineScope(Dispatchers.Main).launch{
+                foodsOnCart.value = repo.getFromCart(userName)
         }
     }
 

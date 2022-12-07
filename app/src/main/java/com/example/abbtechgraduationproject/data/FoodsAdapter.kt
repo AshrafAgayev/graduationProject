@@ -34,13 +34,21 @@ class FoodsAdapter(var context: Context, var foodsList: List<Foods>, var viewMod
         binding.foodName.text = food.name
         binding.foodPrice.text = food.price.toString()
 
-//
-//        try {
-//            val url =viewModel.getImage(food.image)
-//            Glide.with(context).load(url).into(binding.foodImage)
-//        }catch (exception:Exception){
-//            println(exception)
-//        }
+
+        try {
+            val url = "http://kasimadalan.pe.hu/foods/images/"+ food.image
+
+            Glide.with(context).load(url).into(binding.foodImage)
+
+        }catch (exception:Exception){
+            Glide.with(context).load("http://kasimadalan.pe.hu/foods/images/meatball.png").into(binding.foodImage)
+        }
+
+
+
+        binding.btnAddCart.setOnClickListener {
+            viewModel.addToCart(food.name, food.image, food.price, food.category, 3, "Ashraf")
+        }
 
         
     }

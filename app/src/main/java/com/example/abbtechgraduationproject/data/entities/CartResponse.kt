@@ -5,7 +5,7 @@ import java.io.Serializable
 
 data class CartResponse(
     @SerializedName("foods_cart")
-    var foodsOnCart : List<FoodsOnCart>
+    var foodsOnCart: List<FoodsOnCart>?
 
-) :Serializable{
+) : Serializable {
 }

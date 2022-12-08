@@ -1,7 +1,7 @@
 package com.example.abbtechgraduationproject.data.network
 
 import com.example.abbtechgraduationproject.data.entities.CartResponse
-import com.example.abbtechgraduationproject.data.entities.Foods
+import com.example.abbtechgraduationproject.data.entities.Food
 import com.example.abbtechgraduationproject.data.entities.FoodsResponse
 import retrofit2.http.*
 
@@ -17,9 +17,9 @@ interface FoodsService {
     @FormUrlEncoded
     suspend fun addToCart(
         @Field("name") name: String, @Field("image") image: String,
-        @Field("price") price:Int, @Field("category") category:String,
-        @Field("orderAmount") orderAmount:Int, @Field("userName") username: String)
-
+        @Field("price") price: Int, @Field("category") category: String,
+        @Field("orderAmount") orderAmount: Int, @Field("userName") username: String
+    )
 
 
     //get from cart http://kasimadalan.pe.hu/foods/getFoodsCart.php
@@ -29,7 +29,6 @@ interface FoodsService {
     suspend fun getFromCart(@Field("userName") username: String): CartResponse
 
 
-
     //http://kasimadalan.pe.hu/foods/getAllFoodsCart.php
     @POST("foods/getAllFoodsCart.php")
     suspend fun getAllFoodsFromCart(): CartResponse
@@ -37,7 +36,8 @@ interface FoodsService {
     //delete from cart http://kasimadalan.pe.hu/foods/deleteFood.php
 
     @POST("foods/deleteFood.php")
-    suspend fun deleteFromCart(@Field("cartId") id:Int, @Field("userName") username:String)
+    @FormUrlEncoded
+    suspend fun deleteFromCart(@Field("cartId") id: Int, @Field("userName") username: String)
 
 
 }

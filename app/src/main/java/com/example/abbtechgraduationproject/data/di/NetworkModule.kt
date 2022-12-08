@@ -7,6 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -19,22 +20,21 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideFoodService(factory: GsonConverterFactory): FoodsService {
-
-
-
-       return Retrofit.Builder()
+        val logger = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+        return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(factory)
+            .client(OkHttpClient.Builder().addInterceptor(logger).build())
             .build()
-           .create(FoodsService::class.java)
+            .create(FoodsService::class.java)
     }
+
 
     @Singleton
     @Provides
-    fun provideGsonConverterFactory(): GsonConverterFactory{
+    fun provideGsonConverterFactory(): GsonConverterFactory {
         return GsonConverterFactory.create()
     }
-
 
 
 }

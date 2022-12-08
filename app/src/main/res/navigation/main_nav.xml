@@ -11,12 +11,20 @@
         android:label="fragment_main_screen"
         tools:layout="@layout/fragment_main_screen" >
         <action
-            android:id="@+id/action_mainScreenFragment_to_cartFragment"
-            app:destination="@id/cartFragment" />
+            android:id="@+id/action_mainScreenFragment_to_detailsScreenFragment"
+            app:destination="@id/detailsScreenFragment" />
     </fragment>
     <fragment
         android:id="@+id/cartFragment"
         android:name="com.example.abbtechgraduationproject.ui.fragments.CartFragment"
         android:label="fragment_cart"
         tools:layout="@layout/fragment_cart" />
+    <fragment
+        android:id="@+id/detailsScreenFragment"
+        android:name="com.example.abbtechgraduationproject.ui.fragments.DetailsScreenFragment"
+        android:label="DetailsScreenFragment" >
+        <argument
+            android:name="foodDetails"
+            app:argType="com.example.abbtechgraduationproject.data.entities.Food" />
+    </fragment>
 </navigation>

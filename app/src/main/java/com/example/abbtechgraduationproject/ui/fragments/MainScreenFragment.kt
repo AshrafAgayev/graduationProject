@@ -12,6 +12,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.abbtechgraduationproject.R
 import com.example.abbtechgraduationproject.data.adapter.FoodsAdapter
 import com.example.abbtechgraduationproject.data.entities.Food
 import com.example.abbtechgraduationproject.databinding.FragmentMainScreenBinding
@@ -47,20 +48,24 @@ class MainScreenFragment : Fragment() {
             navigateDetails(it)
         }
 
+        binding.btnToCart.setOnClickListener {
+            navigateCart()
+        }
+    }
 
+    private fun navigateCart(){
+        var action = MainScreenFragmentDirections.actionMainScreenFragmentToCartFragment()
+        findNavController().navigate(action)
     }
 
     private fun navigateDetails(food: Food) {
-        val action =
-            MainScreenFragmentDirections.actionMainScreenFragmentToDetailsScreenFragment(
-                food
-            )
+        val action = MainScreenFragmentDirections.actionMainScreenFragmentToDetailsScreenFragment(food)
         findNavController().navigate(action)
     }
 
     private fun observeFoods() {
         viewModel.foodList.observe(viewLifecycleOwner) {
-            Log.d("mytag", "observe: ${it}")
+            Log.d("mytag", "observe: $it")
             adapter.submitList(it)
         }
     }
@@ -87,9 +92,8 @@ class MainScreenFragment : Fragment() {
     }
 
 
+
     fun setSeatchView() {
-
-
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 binding.searchView.clearFocus()
@@ -100,7 +104,6 @@ class MainScreenFragment : Fragment() {
                 adapter.submitList(newList)
                 return false
             }
-
             override fun onQueryTextChange(p0: String?): Boolean {
                 val newList = queryList.filter {
                     it.name.contains(p0.toString())
@@ -108,9 +111,6 @@ class MainScreenFragment : Fragment() {
                 adapter.submitList(newList)
                 return false
             }
-
         })
-
-
     }
 }

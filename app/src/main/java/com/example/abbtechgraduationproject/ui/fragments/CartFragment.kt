@@ -48,11 +48,9 @@ class CartFragment : Fragment() {
         observeFoods()
 //        observe()
         adapter.btnDeleteClickListener = {
-            var cartId = it.cartId
-            var username = it.userName
-            println("$cartId, $username")
+
+            println("${it.cartId}, ${it.name}")
             viewmodel.deleteFromCart(it.cartId, it.userName)
-            observeFoods()
         }
 
     }
@@ -69,12 +67,14 @@ class CartFragment : Fragment() {
             if (it != null && it.isNotEmpty()) {
                 binding.recyclerCart.visibility = View.VISIBLE
                 binding.plate.visibility = View.GONE
+                binding.tvCartIsEmpty.visibility = View.GONE
 
                 adapter.submitList(it)
             } else {
 
                 binding.recyclerCart.visibility = View.GONE
                 binding.plate.visibility = View.VISIBLE
+                binding.tvCartIsEmpty.visibility = View.VISIBLE
             }
         }
 

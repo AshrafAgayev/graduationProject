@@ -1,6 +1,5 @@
 package com.example.abbtechgraduationproject.ui.fragments
 
-import android.icu.number.IntegerWidth
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,9 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.navigation.NavArgs
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.bitmap_recycle.IntegerArrayAdapter
@@ -30,6 +26,7 @@ class DetailsScreenFragment : Fragment() {
     lateinit var viewmodel: DetailsScreenViewModel
     lateinit var binding: FragmentDetailsScreenBinding
     private var orderAmount = 1
+    var price = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,8 +65,7 @@ class DetailsScreenFragment : Fragment() {
             var orderAmount = binding.orderAmount.text.toString().toInt()
             Log.d("Order Amount", " on detail screen: $orderAmount")
 
-            var deleteList = arrayListOf<Int>()
-
+            val deleteList = arrayListOf<Int>()
 
             viewmodel.getFromCart(USERNAME)
             viewmodel.foodsOnCart.observe(viewLifecycleOwner) { list ->
@@ -82,22 +78,23 @@ class DetailsScreenFragment : Fragment() {
                     }
                 }
 
-                Log.d("Order Amount"," added: $orderAmount")
-                viewmodel.addToCart(
-                    food.name,
-                    food.image,
-                    food.price,
-                    food.category,
-                    orderAmount,
-                    USERNAME
-                )
+                Log.d("Order Amount", " added: $orderAmount")
 
-                for (item in deleteList){
-                    viewmodel.deleteFromCart(item, USERNAME)
-                }
             }
 
+            for (item in deleteList) {
+                viewmodel.deleteFromCart(item, USERNAME)
+            }
 
+            price = (food.price * orderAmount)
+            viewmodel.addToCart(
+                food.name,
+                food.image,
+               price,
+                food.category,
+                orderAmount,
+                USERNAME
+            )
         }
     }
 
@@ -115,6 +112,11 @@ class DetailsScreenFragment : Fragment() {
             binding.orderAmount.text = orderAmount.toString()
 
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewmodel.getFromCart(USERNAME)
     }
 
 }

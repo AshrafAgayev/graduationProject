@@ -38,7 +38,6 @@ class CartScreenViewModel @Inject constructor(var repo: FoodsRepository, val mRe
     }
 
     fun getFromCart(userName: String) {
-
         CoroutineScope(Dispatchers.Main).launch {
 
             try {
@@ -73,7 +72,10 @@ class CartScreenViewModel @Inject constructor(var repo: FoodsRepository, val mRe
 //    }
 
 
-    fun deleteFromCart(id: Int?, userName: String?) = launch {
-        repo.deleteFromCart(id, userName)
+    fun deleteFromCart(id: Int?, userName: String?) {
+        CoroutineScope(Dispatchers.Main).launch {
+            repo.deleteFromCart(id, userName)
+            getFromCart(USERNAME)
+        }
     }
 }

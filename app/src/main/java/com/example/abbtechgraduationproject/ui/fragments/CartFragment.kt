@@ -1,11 +1,13 @@
 package com.example.abbtechgraduationproject.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.abbtechgraduationproject.data.USERNAME
 import com.example.abbtechgraduationproject.data.adapter.CartAdapter
@@ -13,15 +15,17 @@ import com.example.abbtechgraduationproject.data.entities.FoodsOnCart
 import com.example.abbtechgraduationproject.databinding.FragmentCartBinding
 import com.example.abbtechgraduationproject.ui.viewmodels.CartScreenViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CartFragment : Fragment() {
 
     private val viewmodel: CartScreenViewModel by viewModels()
     private lateinit var binding: FragmentCartBinding
-//    lateinit var itemTouchHelper: ItemTouchHelper
-    lateinit var cartList: ArrayList<FoodsOnCart>
 
+    //    lateinit var itemTouchHelper: ItemTouchHelper
+    lateinit var cartList: ArrayList<FoodsOnCart>
+    val adapter by lazy { CartAdapter() }
 
 
     override fun onCreateView(
@@ -38,30 +42,58 @@ class CartFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+//        viewmodel.getCart(USERNAME)
 
+        initRecycler()
         observeFoods()
-
-//        initTouchHelper()
-
-    }
-
-    private fun observeFoods() = with(binding) {
-
-        viewmodel.foodsOnCart.observe(viewLifecycleOwner) { list ->
-
-            val adapter = CartAdapter(list, viewmodel)
-            recyclerCart.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            recyclerCart.adapter = adapter
-
-            println(list)
+//        observe()
+        adapter.btnDeleteClickListener = {
+            var cartId = it.cartId
+            var username = it.userName
+            println("$cartId, $username")
+            viewmodel.deleteFromCart(it.cartId, it.userName)
+            observeFoods()
         }
+
     }
+
     override fun onResume() {
         super.onResume()
-        viewmodel.getFromCart(USERNAME)
+        observeFoods()
     }
 
+
+    private fun observeFoods() {
+        viewmodel.getFromCart(USERNAME)
+        viewmodel.foodsOnCart.observe(viewLifecycleOwner){
+            if (it != null && it.isNotEmpty()) {
+                binding.recyclerCart.visibility = View.VISIBLE
+                binding.plate.visibility = View.GONE
+
+                adapter.submitList(it)
+            } else {
+
+                binding.recyclerCart.visibility = View.GONE
+                binding.plate.visibility = View.VISIBLE
+            }
+        }
+
+    }
+
+
+    fun initRecycler() = with(binding) {
+        recyclerCart.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        recyclerCart.adapter = adapter
+    }
+
+//    fun observe() {
+//        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+//            viewmodel.food.collect {
+//                adapter.submitList(it)
+//            }
+//        }
+//    }
 
 //    fun initTouchHelper() {
 //        val itemTouchHelperCallBack = object :

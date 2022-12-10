@@ -49,11 +49,9 @@ class FoodsAdapter :
     }
 
     fun submitList(_foodList: List<Food>) {
-        Log.d("mytag", "submitList: ${_foodList}")
         this.foodsList.clear()
         this.foodsList.addAll(_foodList)
         notifyDataSetChanged()
-        println(foodsList)
     }
 
     override fun onBindViewHolder(holder: FoodsViewHolder, position: Int) {

@@ -24,7 +24,7 @@ object NetworkModule {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(factory)
-            .client(OkHttpClient.Builder().addInterceptor(logger).build())
+         //   .client(OkHttpClient.Builder().addInterceptor(logger).build())
             .build()
             .create(FoodsService::class.java)
     }

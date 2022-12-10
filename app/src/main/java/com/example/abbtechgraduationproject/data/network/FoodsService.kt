@@ -3,6 +3,8 @@ package com.example.abbtechgraduationproject.data.network
 import com.example.abbtechgraduationproject.data.entities.CartResponse
 import com.example.abbtechgraduationproject.data.entities.Food
 import com.example.abbtechgraduationproject.data.entities.FoodsResponse
+import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.*
 
 interface FoodsService {
@@ -37,7 +39,7 @@ interface FoodsService {
 
     @POST("foods/deleteFood.php")
     @FormUrlEncoded
-    suspend fun deleteFromCart(@Field("cartId") id: Int, @Field("userName") username: String)
+    suspend fun deleteFromCart(@Field("cartId") id: Int?, @Field("userName") username: String?)
 
 
 }

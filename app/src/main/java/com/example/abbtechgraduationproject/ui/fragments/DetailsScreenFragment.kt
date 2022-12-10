@@ -2,6 +2,7 @@ package com.example.abbtechgraduationproject.ui.fragments
 
 import android.icu.number.IntegerWidth
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,7 @@ import com.example.abbtechgraduationproject.data.USERNAME
 import com.example.abbtechgraduationproject.data.entities.FoodsOnCart
 import com.example.abbtechgraduationproject.databinding.FragmentDetailsScreenBinding
 import com.example.abbtechgraduationproject.ui.viewmodels.DetailsScreenViewModel
+import com.example.abbtechgraduationproject.utils.or
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -49,7 +51,7 @@ class DetailsScreenFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        val args :DetailsScreenFragmentArgs by navArgs()
+        val args: DetailsScreenFragmentArgs by navArgs()
         val food = args.foodDetails
 
         binding.orderAmount.text = orderAmount.toString()
@@ -58,30 +60,51 @@ class DetailsScreenFragment : Fragment() {
         binding.tvFoodName.text = food.name
         binding.tvFoodPrice.text = food.price.toString()
 
-        Glide.with(binding.root).load(IMAGE_URL+food.image).into(binding.imgItem)
+        Glide.with(binding.root).load(IMAGE_URL + food.image).into(binding.imgItem)
 
 
 
         binding.btnAddCart.setOnClickListener {
-            val orderAmount = binding.orderAmount.text.toString().toInt()
+            var orderAmount = binding.orderAmount.text.toString().toInt()
+            Log.d("Order Amount", " on detail screen: $orderAmount")
+
+            var deleteList = arrayListOf<Int>()
+
 
             viewmodel.getFromCart(USERNAME)
+            viewmodel.foodsOnCart.observe(viewLifecycleOwner) { list ->
+                Log.d("List ", "$list")
+                for (a in list) {
+                    if (a.name == food.name) {
+                        orderAmount += a.orderAmount
+                        deleteList.add(a.cartId)
+                        Log.d("Order Amount", " deleted: ${a.orderAmount}")
+                    }
+                }
+
+                Log.d("Order Amount"," added: $orderAmount")
+                viewmodel.addToCart(
+                    food.name,
+                    food.image,
+                    food.price,
+                    food.category,
+                    orderAmount,
+                    USERNAME
+                )
+
+                for (item in deleteList){
+                    viewmodel.deleteFromCart(item, USERNAME)
+                }
+            }
 
 
-                //TODO making list contain single element of a kind)
-            viewmodel.foodsOnCart.observe(viewLifecycleOwner, Observer {
-
-            })
-
-            viewmodel.addToCart(food.name, food.image, food.price, food.category, orderAmount, USERNAME )
         }
     }
 
-
-    fun initButtons(){
+    fun initButtons() {
 
         binding.btnDecrease.setOnClickListener {
-            if(orderAmount>1){
+            if (orderAmount > 1) {
                 orderAmount--
             }
             binding.orderAmount.text = orderAmount.toString()

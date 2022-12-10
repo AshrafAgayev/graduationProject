@@ -1,0 +1,23 @@
+[33mcommit d4f7975ed236ace344c2e54d407516293d6810c2[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: AgayevAAz <asraf.agayev@kapitalbank.az>
+Date:   Thu Dec 8 23:54:43 2022 +0400
+
+    create details fragment
+
+[33mcommit 4f41a806ecc8786fb3c0cd74a75c1035e44fba2e[m
+Author: AgayevAAz <asraf.agayev@kapitalbank.az>
+Date:   Wed Dec 7 17:49:40 2022 +0400
+
+    create cart fragment
+
+[33mcommit a48963aa0769ecd6eeef8a517a49652207f340b5[m
+Author: AgayevAAz <asraf.agayev@kapitalbank.az>
+Date:   Wed Dec 7 15:57:29 2022 +0400
+
+    add foods to cart
+
+[33mcommit e08e46720c65c2c1a91003d1f50d3547e3da5f28[m
+Author: AgayevAAz <asraf.agayev@kapitalbank.az>
+Date:   Wed Dec 7 12:44:38 2022 +0400
+
+    prepared api calls

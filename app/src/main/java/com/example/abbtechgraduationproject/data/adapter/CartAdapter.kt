@@ -2,21 +2,32 @@ package com.example.abbtechgraduationproject.data.adapter
 
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.abbtechgraduationproject.data.IMAGE_URL
-import com.example.abbtechgraduationproject.data.USERNAME
 import com.example.abbtechgraduationproject.data.entities.FoodsOnCart
 import com.example.abbtechgraduationproject.databinding.CartItemViewBinding
 import com.example.abbtechgraduationproject.ui.viewmodels.CartScreenViewModel
 
-class CartAdapter(var cartList: List<FoodsOnCart>, var viewModel: CartScreenViewModel) :
+class CartAdapter() :
     RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
-//    private val list = mutableListOf(cartList) todo
+    //    private val list = mutableListOf(cartList) todo
+    lateinit var btnDeleteClickListener: (FoodsOnCart) -> Unit
 
-    class CartViewHolder(var binding: CartItemViewBinding) : RecyclerView.ViewHolder(binding.root) {
+    var cartList = ArrayList<FoodsOnCart>()
+
+
+    inner class CartViewHolder(var binding: CartItemViewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.btnDelete.setOnClickListener {
+                btnDeleteClickListener(cartList[adapterPosition])
+            }
+        }
 
     }
 
@@ -32,24 +43,29 @@ class CartAdapter(var cartList: List<FoodsOnCart>, var viewModel: CartScreenView
 
         val item = cartList[position]
 
+        binding.tvName.text = item.name
 
+        binding.tvAmount.text = item.orderAmount.toString()
 
-            binding.tvName.text = item.name
+        binding.tvPrice.text = item.price.toString()
 
-            binding.tvPrice.text = item.price.toString()
+        val url = IMAGE_URL + item.image
+        Glide.with(holder.itemView.context).load(url).into(binding.imageView)
 
-            val url = IMAGE_URL + item.image
-            Glide.with(holder.itemView.context).load(url).into(binding.imageView)
-
-            binding.btnDelete.setOnClickListener {
-                viewModel.deleteFromCart(item.cartId, item.userName)
-                viewModel.getFromCart(USERNAME)
-            }
 
     }
 
     override fun getItemCount(): Int = cartList.size
 
+
+    fun submitList(list: List<FoodsOnCart>) {
+
+        cartList.clear()
+        cartList.addAll(list)
+
+        notifyDataSetChanged()
+
+    }
 
 
 }

@@ -9,7 +9,7 @@ import retrofit2.http.*
 
 interface FoodsService {
 
-    //http://kasimadalan.pe.hu/
+    //http://kasimadalan.pe.hu/foods/getAllFoods.php
     @GET("foods/getAllFoods.php")
     suspend fun getAll(): FoodsResponse
 
@@ -25,7 +25,6 @@ interface FoodsService {
 
 
     //get from cart http://kasimadalan.pe.hu/foods/getFoodsCart.php
-
     @POST("foods/getFoodsCart.php")
     @FormUrlEncoded
     suspend fun getFromCart(@Field("userName") username: String): CartResponse

@@ -7,12 +7,16 @@
     android:background="@color/light_grey"
     tools:context=".ui.fragments.MainScreenFragment">
 
+    <include
+        android:id="@+id/header"
+        layout="@layout/header_title" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header"
         app:layout_constraintVertical_bias="0">
 
         <LinearLayout
@@ -20,14 +24,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/gilroybold"
-                android:padding="10dp"
-                android:text="All Recipes"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -65,7 +61,7 @@
                 android:fontFamily="@font/gilroybold"
                 android:paddingStart="10dp"
                 android:text="Category name"
-                android:textColor="@color/black"
+                android:textColor="@color/textColor"
                 android:textSize="15sp" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -76,10 +72,7 @@
                 android:orientation="horizontal"
                 tools:itemCount="1" />
 
-
         </LinearLayout>
-
-
     </ScrollView>
 
 
@@ -94,9 +87,7 @@
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:maxImageSize="30dp"
-        app:rippleColor="#FFFFFF" />
-
+        app:maxImageSize="30dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

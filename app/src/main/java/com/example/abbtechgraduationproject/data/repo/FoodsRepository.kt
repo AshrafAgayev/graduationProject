@@ -25,10 +25,6 @@ class FoodsRepository @Inject constructor(private var service: FoodsService) {
     }
 
 
-    suspend fun getAllFoodsFromCart(): List<FoodsOnCart> {
-        return service.getAllFoodsFromCart().foodsOnCart ?: emptyList()
-    }
-
     suspend fun addToCart(
         name: String,
         image: String,
@@ -45,43 +41,6 @@ class FoodsRepository @Inject constructor(private var service: FoodsService) {
             val response = service.getFromCart(userName)
             return@withContext response.foodsOnCart
         }
-
-
-//        if (response.isSuccessful && response.body() != null && response.body().toString() != "") {
-//            Log.e("RESPONSE", "${response.body()}")
-//
-//            return response.body()!!.foodsOnCart.toSafeList()
-//
-//        } else if (response.errorBody() != null) {
-//            Log.e("RESPONSE", "${response.errorBody()}")
-//            return emptyList()
-//        } else {
-//            Log.e("RESPONSE", "${response.body()}")
-//            return emptyList()
-//        }
-
-
-//        var dataCall : Call<CartResponse>? = service.getFromCart(userName)
-//
-//        var list: List<FoodsOnCart>?
-//
-//        dataCall?.enqueue( object: Callback<CartResponse?> {
-//            override fun onResponse(call: Call<CartResponse?>, response: Response<CartResponse?>) : List<FoodsOnCart> {
-//                list = response.body()?.foodsOnCart
-//                return list.toSafeList()
-//            }
-//
-//            override fun onFailure(call: Call<CartResponse?>, t: Throwable) : List<FoodsOnCart> {
-//                list = emptyList()
-//                return list.toSafeList()
-//            }
-//
-//
-//        })
-//
-
-
-
 
     suspend fun deleteFromCart(id: Int?, username: String?) {
         return service.deleteFromCart(id, username)

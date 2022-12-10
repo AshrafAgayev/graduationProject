@@ -1,7 +1,6 @@
 package com.example.abbtechgraduationproject.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,13 +9,12 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.abbtechgraduationproject.R
 import com.example.abbtechgraduationproject.data.USERNAME
-import com.example.abbtechgraduationproject.data.adapter.CartAdapter
-import com.example.abbtechgraduationproject.data.entities.FoodsOnCart
+import com.example.abbtechgraduationproject.ui.adapter.CartAdapter
 import com.example.abbtechgraduationproject.databinding.FragmentCartBinding
 import com.example.abbtechgraduationproject.ui.viewmodels.CartScreenViewModel
 import com.example.abbtechgraduationproject.ui.viewmodels.MainScreenViewModel
-import com.example.abbtechgraduationproject.utils.or
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,11 +42,12 @@ class CartFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        viewmodel.getCart(USERNAME)
 
         initRecycler()
         observeFoods()
         initTouchHelper()
+
+        binding.header.title.text = getString(R.string.your_order)
 
         adapter.btnDeleteClickListener = {
 

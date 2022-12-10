@@ -1,4 +1,4 @@
-package com.example.abbtechgraduationproject.data.adapter
+package com.example.abbtechgraduationproject.ui.adapter
 
 
 import android.view.LayoutInflater
@@ -11,6 +11,7 @@ import com.example.abbtechgraduationproject.data.IMAGE_URL
 import com.example.abbtechgraduationproject.data.entities.FoodsOnCart
 import com.example.abbtechgraduationproject.databinding.CartItemViewBinding
 import com.example.abbtechgraduationproject.ui.viewmodels.CartScreenViewModel
+import com.example.abbtechgraduationproject.utils.Category
 
 class CartAdapter() :
     RecyclerView.Adapter<CartAdapter.CartViewHolder>(){
@@ -20,15 +21,8 @@ class CartAdapter() :
 
     var cartList = ArrayList<FoodsOnCart>()
 
-
     inner class CartViewHolder(var binding: CartItemViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
-        init {
-            binding.btnDelete.setOnClickListener {
-                btnDeleteClickListener(cartList[adapterPosition])
-            }
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
@@ -41,9 +35,10 @@ class CartAdapter() :
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
         val binding = holder.binding
         val item = cartList[position]
+        val price = "Total: ${item.price} $"
         binding.tvName.text = item.name
         binding.tvAmount.text = item.orderAmount.toString()
-        binding.tvPrice.text = item.price.toString()
+        binding.tvPrice.text = price
         val url = IMAGE_URL + item.image
         Glide.with(holder.itemView.context).load(url).into(binding.imageView)
     }

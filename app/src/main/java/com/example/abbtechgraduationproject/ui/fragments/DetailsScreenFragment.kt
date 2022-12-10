@@ -47,58 +47,13 @@ class DetailsScreenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        val args: DetailsScreenFragmentArgs by navArgs()
-        val food = args.foodDetails
-
-        binding.orderAmount.text = orderAmount.toString()
         initButtons()
 
-        binding.tvFoodName.text = food.name
-        binding.tvFoodPrice.text = food.price.toString()
-
-        Glide.with(binding.root).load(IMAGE_URL + food.image).into(binding.imgItem)
-
-
-
-        binding.btnAddCart.setOnClickListener {
-            var orderAmount = binding.orderAmount.text.toString().toInt()
-            Log.d("Order Amount", " on detail screen: $orderAmount")
-
-            val deleteList = arrayListOf<Int>()
-
-            viewmodel.getFromCart(USERNAME)
-            viewmodel.foodsOnCart.observe(viewLifecycleOwner) { list ->
-                Log.d("List ", "$list")
-                for (a in list) {
-                    if (a.name == food.name) {
-                        orderAmount += a.orderAmount
-                        deleteList.add(a.cartId)
-                        Log.d("Order Amount", " deleted: ${a.orderAmount}")
-                    }
-                }
-
-                Log.d("Order Amount", " added: $orderAmount")
-
-            }
-
-            for (item in deleteList) {
-                viewmodel.deleteFromCart(item, USERNAME)
-            }
-
-            price = (food.price * orderAmount)
-            viewmodel.addToCart(
-                food.name,
-                food.image,
-               price,
-                food.category,
-                orderAmount,
-                USERNAME
-            )
-        }
     }
 
     fun initButtons() {
+        val args: DetailsScreenFragmentArgs by navArgs()
+        val food = args.foodDetails
 
         binding.btnDecrease.setOnClickListener {
             if (orderAmount > 1) {
@@ -111,6 +66,42 @@ class DetailsScreenFragment : Fragment() {
             orderAmount++
             binding.orderAmount.text = orderAmount.toString()
 
+        }
+
+        binding.orderAmount.text = orderAmount.toString()
+        binding.tvFoodName.text = food.name
+        binding.tvFoodPrice.text = "${food.price} $"
+        Glide.with(binding.root).load(IMAGE_URL + food.image).into(binding.imgItem)
+
+        binding.btnAddCart.setOnClickListener {
+            var orderAmount = binding.orderAmount.text.toString().toInt()
+
+            val deleteList = arrayListOf<Int>()
+
+            viewmodel.getFromCart(USERNAME)
+            viewmodel.foodsOnCart.observe(viewLifecycleOwner) { list ->
+                Log.d("List ", "$list")
+                for (a in list) {
+                    if (a.name == food.name) {
+                        orderAmount += a.orderAmount
+                        deleteList.add(a.cartId)
+                    }
+                }
+            }
+
+            for (item in deleteList) {
+                viewmodel.deleteFromCart(item, USERNAME)
+            }
+
+            price = (food.price * orderAmount)
+            viewmodel.addToCart(
+                food.name,
+                food.image,
+                price,
+                food.category,
+                orderAmount,
+                USERNAME
+            )
         }
     }
 

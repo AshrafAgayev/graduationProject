@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailsScreenViewModel @Inject constructor(var repo: FoodsRepository) : ViewModel() {
+class DetailsScreenViewModel @Inject constructor(var repo: FoodsRepository) : BaseViewModel() {
 
     private val _foodsOnCart = MutableLiveData<List<FoodsOnCart>>()
     val foodsOnCart: LiveData<List<FoodsOnCart>> = _foodsOnCart
@@ -29,10 +29,8 @@ class DetailsScreenViewModel @Inject constructor(var repo: FoodsRepository) : Vi
         category: String,
         orderAmount: Int,
         username: String
-    ) {
-        CoroutineScope(Dispatchers.Main).launch {
-            repo.addToCart(name, image, price, category, orderAmount, username)
-        }
+    ) = launch {
+        repo.addToCart(name, image, price, category, orderAmount, username)
     }
 
 
@@ -47,10 +45,8 @@ class DetailsScreenViewModel @Inject constructor(var repo: FoodsRepository) : Vi
     }
 
 
-    fun deleteFromCart(id: Int, userName: String) {
-        CoroutineScope(Dispatchers.Main).launch {
+    fun deleteFromCart(id: Int, userName: String) = launch{
             repo.deleteFromCart(id, userName)
             getFromCart(USERNAME)
-        }
     }
 }

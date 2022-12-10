@@ -1,4 +1,4 @@
-package com.example.abbtechgraduationproject.data.adapter
+package com.example.abbtechgraduationproject.ui.adapter
 
 import android.content.Context
 import android.util.Log
@@ -32,7 +32,7 @@ class FoodsAdapter :
         fun bindData(food: Food) {
 
             binding.foodName.text = food.name
-            binding.foodPrice.text = food.price.toString()
+            binding.foodPrice.text = "${food.price} $"
             val url = IMAGE_URL + food.image
 
             Glide.with(binding.root.context).load(url).placeholder(R.drawable.download)

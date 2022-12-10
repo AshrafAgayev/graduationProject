@@ -8,15 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.abbtechgraduationproject.R
-import com.example.abbtechgraduationproject.data.adapter.FoodsAdapter
+import com.example.abbtechgraduationproject.ui.adapter.FoodsAdapter
 import com.example.abbtechgraduationproject.data.entities.Food
 import com.example.abbtechgraduationproject.databinding.FragmentMainScreenBinding
+import com.example.abbtechgraduationproject.ui.adapter.CategoryAdapter
 import com.example.abbtechgraduationproject.ui.viewmodels.MainScreenViewModel
+import com.example.abbtechgraduationproject.utils.categotyList
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,6 +25,7 @@ class MainScreenFragment : Fragment() {
     private lateinit var binding: FragmentMainScreenBinding
     lateinit var viewModel: MainScreenViewModel
     private val adapter: FoodsAdapter by lazy { FoodsAdapter() }
+    private val categoryAdapter: CategoryAdapter by lazy { CategoryAdapter() }
     var queryList = arrayListOf<Food>()
 
 
@@ -40,9 +41,18 @@ class MainScreenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.header.title.text = getString(R.string.title_all_foods)
         initRecyclerView()
         observeFoods()
         setSeatchView()
+
+        categoryAdapter.submitList(categotyList)
+
+        categoryAdapter.clickListener = {
+            val listFood = filterByCategory(it)
+            adapter.submitList(listFood)
+        }
+
 
         adapter.onBtnAddClickListener = {
             navigateDetails(it)
@@ -71,6 +81,11 @@ class MainScreenFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
+
+        binding.rvSubCategory.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rvSubCategory.adapter = categoryAdapter
+
         binding.rvMainCategory.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.rvMainCategory.adapter = adapter
@@ -87,13 +102,10 @@ class MainScreenFragment : Fragment() {
         super.onResume()
         viewModel.foodList.observe(viewLifecycleOwner) { list ->
             queryList.addAll(list)
-
         }
     }
 
-
-
-    fun setSeatchView() {
+    private fun setSeatchView() {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 binding.searchView.clearFocus()
@@ -109,8 +121,33 @@ class MainScreenFragment : Fragment() {
                     it.name.contains(p0.toString())
                 }
                 adapter.submitList(newList)
-                return false
-            }
+                return false }
         })
+    }
+
+    private fun filterByCategory(category:String): List<Food>{
+        var customList = ArrayList<Food>()
+
+        if (category.lowercase() != "all") {
+            if (category.lowercase() == "meals") {
+                for (element in queryList) {
+                    if (element.category.lowercase() == "meals")
+                        customList.add(element)
+                }
+            } else if (category.lowercase() == "desserts") {
+                for (element in queryList) {
+                    if (element.category.lowercase() == "desserts")
+                        customList.add(element)
+                }
+            } else if (category.lowercase() == "drinks") {
+                for (element in queryList) {
+                    if (element.category.lowercase() == "drinks")
+                        customList.add(element)
+                }
+            }
+        } else {
+            customList = ArrayList(queryList)
+        }
+        return customList
     }
 }

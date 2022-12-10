@@ -20,11 +20,11 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideFoodService(factory: GsonConverterFactory): FoodsService {
-        val logger = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+        val logger = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS)
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(factory)
-         //   .client(OkHttpClient.Builder().addInterceptor(logger).build())
+            .client(OkHttpClient.Builder().addInterceptor(logger).build())
             .build()
             .create(FoodsService::class.java)
     }

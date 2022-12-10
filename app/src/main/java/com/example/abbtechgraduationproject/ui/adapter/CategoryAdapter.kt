@@ -3,7 +3,6 @@ package com.example.abbtechgraduationproject.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.abbtechgraduationproject.data.entities.Food
 import com.example.abbtechgraduationproject.databinding.CategoryItemBinding
 import com.example.abbtechgraduationproject.utils.Category
 

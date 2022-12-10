@@ -9,13 +9,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.bitmap_recycle.IntegerArrayAdapter
 import com.example.abbtechgraduationproject.data.IMAGE_URL
 import com.example.abbtechgraduationproject.data.USERNAME
-import com.example.abbtechgraduationproject.data.entities.FoodsOnCart
 import com.example.abbtechgraduationproject.databinding.FragmentDetailsScreenBinding
 import com.example.abbtechgraduationproject.ui.viewmodels.DetailsScreenViewModel
-import com.example.abbtechgraduationproject.utils.or
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -46,9 +43,7 @@ class DetailsScreenFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initButtons()
-
     }
 
     fun initButtons() {

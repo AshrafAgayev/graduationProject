@@ -2,21 +2,16 @@ package com.example.abbtechgraduationproject.ui.adapter
 
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.abbtechgraduationproject.data.IMAGE_URL
 import com.example.abbtechgraduationproject.data.entities.FoodsOnCart
 import com.example.abbtechgraduationproject.databinding.CartItemViewBinding
-import com.example.abbtechgraduationproject.ui.viewmodels.CartScreenViewModel
-import com.example.abbtechgraduationproject.utils.Category
 
 class CartAdapter() :
     RecyclerView.Adapter<CartAdapter.CartViewHolder>(){
 
-    //    private val list = mutableListOf(cartList) todo
     lateinit var btnDeleteClickListener: (FoodsOnCart) -> Unit
 
     var cartList = ArrayList<FoodsOnCart>()

@@ -15,5 +15,3 @@ fun <T> Set<T>?.toSafeSet(): Set<T> {
     return if (this.isNullOrEmpty()) emptySet()
     else this
 }
-
-fun <T> T?.or(default: T): T = this ?: default

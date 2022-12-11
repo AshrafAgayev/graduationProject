@@ -91,6 +91,7 @@ class CartFragment : Fragment() {
                 binding.recyclerCart.visibility = View.VISIBLE
                 binding.plate.visibility = View.GONE
                 binding.tvCartIsEmpty.visibility = View.GONE
+                binding.tvCartTotal.visibility = View.VISIBLE
 
                 for (a in it){
                     total+=a.price
@@ -98,6 +99,7 @@ class CartFragment : Fragment() {
                 binding.tvCartTotal.text = "Cart Total: ${total.toString()} $"
                 adapter.submitList(it)
             } else {
+                binding.tvCartTotal.visibility = View.GONE
                 binding.recyclerCart.visibility = View.GONE
                 binding.plate.visibility = View.VISIBLE
                 binding.tvCartIsEmpty.visibility = View.VISIBLE

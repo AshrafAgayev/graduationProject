@@ -14,15 +14,18 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
 
+
   <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/recyclerCart"
       android:layout_width="match_parent"
       android:layout_height="0dp"
-      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintBottom_toTopOf="@+id/tvCartTotal"
       app:layout_constraintEnd_toEndOf="parent"
+      android:layout_marginBottom="20dp"
+      app:layout_constraintHorizontal_bias="0.0"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/header" />
-
+      app:layout_constraintTop_toBottomOf="@id/header"
+      app:layout_constraintVertical_bias="0.0" />
 
   <ImageView
       android:id="@+id/plate"
@@ -50,6 +53,17 @@
     android:textColor="@color/orange"
     android:fontFamily="@font/gilroybold"
     android:visibility="gone"/>
+
+  <TextView
+      android:id="@+id/tvCartTotal"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:fontFamily="@font/gilroybold"
+      android:textColor="@color/orange"
+      android:layout_margin="20dp"
+      android:textSize="25sp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

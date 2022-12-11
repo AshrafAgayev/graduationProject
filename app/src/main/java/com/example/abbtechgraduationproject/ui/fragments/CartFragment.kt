@@ -25,6 +25,7 @@ class CartFragment : Fragment() {
     private val mainViewModel: MainScreenViewModel by viewModels()
     private lateinit var binding: FragmentCartBinding
 
+    var total = 0
     lateinit var itemTouchHelper: ItemTouchHelper
     val adapter by lazy { CartAdapter() }
 
@@ -46,6 +47,7 @@ class CartFragment : Fragment() {
         initRecycler()
         observeFoods()
         initTouchHelper()
+
 
         binding.header.title.text = getString(R.string.your_order)
 
@@ -84,11 +86,16 @@ class CartFragment : Fragment() {
     private fun observeFoods() {
         viewmodel.getFromCart(USERNAME)
         viewmodel.foodsOnCart.observe(viewLifecycleOwner) {
+            total = 0
             if (it != null && it.isNotEmpty()) {
                 binding.recyclerCart.visibility = View.VISIBLE
                 binding.plate.visibility = View.GONE
                 binding.tvCartIsEmpty.visibility = View.GONE
 
+                for (a in it){
+                    total+=a.price
+                }
+                binding.tvCartTotal.text = "Cart Total: ${total.toString()} $"
                 adapter.submitList(it)
             } else {
                 binding.recyclerCart.visibility = View.GONE
